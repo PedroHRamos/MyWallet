@@ -1,0 +1,65 @@
+# .NET build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+*.psess
+*.vsp
+*.vspscc
+*.vssscc
+*.cache
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publish.xml
+*.vsix
+*.ncb
+*.sdf
+*.opensdf
+*.v12.suo
+*.sln.ide
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Docker
+*.log
+.dockerignore
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# Kafka
+/kafka-logs/
+
+# Secrets
+secrets.json
+appsettings.*.json
+!appsettings.json
+
+# Others
+.env
+*.db
+*.pdb
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# NuGet packages
+*.nupkg
+packages/
