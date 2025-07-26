@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Your_password123" # Replace with a strong password
+      MSSQL_PID: "Developer" # Or "Express", "Standard", "Enterprise"
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
+
+  mywallet-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=MyWalletDb;User=sa;Password=Your_password123;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+#volumes:
+  #sqlserver_data: # Define a named volume for SQL Server data persistence
