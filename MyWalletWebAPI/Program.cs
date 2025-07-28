@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using MyWallet.Features.Usuarios;
+using MyWallet.Features.Users;
 using MyWallet.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +18,7 @@ builder.Services.AddDbContext<MyWalletDbContext>(options =>
            .EnableSensitiveDataLogging()
            .LogTo(Console.WriteLine, LogLevel.Information));
 
-builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
