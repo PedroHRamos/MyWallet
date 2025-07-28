@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using MyWallet.Features.Usuarios;
 using MyWallet.Models;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,33 +18,29 @@ builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+using var masterContext = new MyWalletDbContext(
+    new DbContextOptionsBuilder<MyWalletDbContext>()
+        .UseSqlServer(masterConnectionString)
+        .Options);
+
+var maxAttempts = 30;
+var attempts = 0;
+while (attempts < maxAttempts)
 {
-    using var masterContext = new MyWalletDbContext(
-        new DbContextOptionsBuilder<MyWalletDbContext>()
-            .UseSqlServer(masterConnectionString)
-            .Options);
-
-    var maxAttempts = 30;
-    var attempts = 0;
-    while (attempts < maxAttempts)
+    try
     {
-        try
-        {
-            if (masterContext.Database.CanConnect()) break;
-        }
-        catch
-        {
-            attempts++;
-            Thread.Sleep(1000);
-        }
+        if (masterContext.Database.CanConnect())
+            break;
     }
-    if (attempts == maxAttempts)
+    catch
     {
-        throw new Exception("Could not connect to SQL Server after 30 attempts");
+        attempts++;
+        Thread.Sleep(1000);
     }
-
-    masterContext.Database.ExecuteSqlRaw("IF DB_ID('MyWalletDb') IS NULL CREATE DATABASE [MyWalletDb];");
+}
+if (attempts == maxAttempts)
+{
+    throw new Exception("Could not connect to SQL Server after 30 attempts");
 }
 
 using var scope = app.Services.CreateScope();
@@ -58,4 +52,3 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-

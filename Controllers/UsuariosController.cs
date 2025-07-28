@@ -28,6 +28,19 @@ namespace MyWallet.Controllers
             return CreatedAtAction(nameof(Get), new { id = usuario.Id }, usuario);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll(Guid id)
+        {
+            var usuarios = await _service.GetAllAsync();
+            if (!usuarios.Any())
+            {
+                _logger.LogWarning("GET /api/usuarios - Usuários não encontrados");
+                return NotFound();
+            }
+            _logger.LogInformation("GET /api/usuarios - Usuários encontrados");
+            return Ok(usuarios);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> Get(Guid id)
         {

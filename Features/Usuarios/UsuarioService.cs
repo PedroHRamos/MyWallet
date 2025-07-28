@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -49,6 +50,16 @@ namespace MyWallet.Features.Usuarios
             await _context.SaveChangesAsync();
             _logger.LogInformation("Usuário criado com Id {Id}", usuario.Id);
             return usuario;
+        }
+
+        public async Task<IEnumerable<Usuario?>> GetAllAsync()
+        {
+            var usuarios = await _context.Usuarios.ToListAsync();
+            if (!usuarios.Any())
+                _logger.LogWarning("Nenhum usuario encontrado");
+            else
+                _logger.LogInformation("Usuários recuperados");
+            return usuarios;
         }
 
         public async Task<Usuario?> GetAsync(Guid id)
