@@ -1,0 +1,41 @@
+services:
+  api:
+    container_name: mywallet-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "32779:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - mywallet-network 
+  
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_password123
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "1433:1433"
+    networks:
+      mywallet-network:
+         aliases:
+          - sqlserver
+
+  nginx:
+    image: nginx:alpine
+    container_name: mywallet-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    networks:
+      - mywallet-network
+
+networks:
+  mywallet-network:
+    driver: bridge

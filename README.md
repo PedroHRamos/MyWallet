@@ -1,42 +1,30 @@
 # MyWallet
 
-MyWallet é uma API desenvolvida em .NET 8 para gerenciar a carteira de investimentos de múltiplos usuários. O objetivo do projeto é fornecer funcionalidades para acompanhamento de rentabilidade, definição de carteira meta, comparação com benchmarks e outras features relacionadas à gestão de investimentos.
+API em .NET 8 para gerenciamento de carteiras de investimentos de mÃºltiplos usuÃ¡rios, com funcionalidades como cadastro, controle de ativos, cÃ¡lculo de rentabilidade, carteira meta e relatÃ³rios.
 
-## Funcionalidades
-- Cadastro e gerenciamento de usuários
-- Controle de ativos e movimentações
-- Cálculo de rentabilidade da carteira
-- Definição de carteira meta
-- Comparação com benchmarks
-- Relatórios e indicadores de performance
+## Como rodar localmente
 
-## Como rodar o projeto com Docker
+- **Com Docker Compose:**  
+   Certifique-se de ter Docker instalado e execute:  
+   - `docker compose up -d --build`
+   
 
-1. Certifique-se de ter o Docker instalado em sua máquina.
-2. No diretório do projeto, execute o comando abaixo para construir a imagem:
+- **Debug local com SQL Server Docker:**  
+    Execute o contÃªiner do SQL Server:  
+    - `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Your_password123" -p 1433:1433 --name sql_server_container -d mcr.microsoft.com/mssql/server:latest`
 
-```sh
-docker build -t mywallet-api .
-```
+Depois, execute o projeto no Visual Studio usando a opÃ§Ã£o `http`.
 
-3. Após a build, execute o contêiner:
+## Tecnologias
 
-```sh
-docker run -d -p 8080:8080 --name mywallet-api mywallet-api
-```
+- .NET 8  
+- SQL Server  
+- Docker  
+- Kafka (No Futuro)  
 
-4. A API estará disponível em `http://localhost:8080`.
+## ObservaÃ§Ãµes
 
-> Para ambientes de desenvolvimento, o acesso é via HTTP. Para produção, recomenda-se configurar HTTPS e variáveis de ambiente adequadas.
+- DocumentaÃ§Ã£o automÃ¡tica via Swagger.  
+- Configure a string de conexÃ£o do SQL Server em `appsettings.json`.
 
-## Tecnologias utilizadas
-- .NET 8
-- SQL Server
-- Docker
-- Kafka (para mensageria)
 
-## Observações
-- O projeto inclui integração com Swagger para documentação automática dos endpoints.
-- Para persistência, configure a string de conexão do SQL Server em `appsettings.json`.
-
----

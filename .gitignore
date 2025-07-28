@@ -10,6 +10,9 @@ obj/
 
 # Visual Studio
 .vs/
+data/
+log/
+secrets/
 *.psess
 *.vsp
 *.vspscc
@@ -48,7 +51,6 @@ obj/
 
 # Secrets
 secrets.json
-appsettings.*.json
 !appsettings.json
 
 # Others
