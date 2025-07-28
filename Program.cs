@@ -6,11 +6,9 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Monta a connection string dinamicamente
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var masterConnectionString = connectionString.Replace("Database=MyWalletDb", "Database=master");
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -22,56 +20,42 @@ builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 
-// Wait for SQL Server to be ready
 if (app.Environment.IsDevelopment())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<MyWalletDbContext>();
-        var maxAttempts = 30; // 30 seconds timeout
-        var attempts = 0;
-        
-        while (attempts < maxAttempts)
-        {
-            try
-            {
-                db.Database.CanConnect();
-                break;
-            }
-            catch
-            {
-                attempts++;
-                Thread.Sleep(1000); // Wait 1 second before next attempt
-            }
-        }
-        
-        if (attempts == maxAttempts)
-        {
-            throw new Exception("Could not connect to SQL Server after 30 attempts");
-        }
+    using var masterContext = new MyWalletDbContext(
+        new DbContextOptionsBuilder<MyWalletDbContext>()
+            .UseSqlServer(masterConnectionString)
+            .Options);
 
+    var maxAttempts = 30;
+    var attempts = 0;
+    while (attempts < maxAttempts)
+    {
         try
         {
-            db.Database.Migrate();
+            if (masterContext.Database.CanConnect()) break;
         }
-        catch (Exception ex)
+        catch
         {
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred while migrating the database.");
-            throw;
+            attempts++;
+            Thread.Sleep(1000);
         }
-        
-        
     }
+    if (attempts == maxAttempts)
+    {
+        throw new Exception("Could not connect to SQL Server after 30 attempts");
+    }
+
+    masterContext.Database.ExecuteSqlRaw("IF DB_ID('MyWalletDb') IS NULL CREATE DATABASE [MyWalletDb];");
 }
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<MyWalletDbContext>();
+db.Database.Migrate();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
-//app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
+
