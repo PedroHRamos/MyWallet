@@ -1,50 +1,32 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using MyWallet.Features.Usuarios;
 using MyWallet.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var masterConnectionString = connectionString.Replace("Database=MyWalletDb", "Database=master");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// DbContext apontando direto para o banco MyWalletDb
 builder.Services.AddDbContext<MyWalletDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString)
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
 
 builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 
-using var masterContext = new MyWalletDbContext(
-    new DbContextOptionsBuilder<MyWalletDbContext>()
-        .UseSqlServer(masterConnectionString)
-        .Options);
-
-var maxAttempts = 30;
-var attempts = 0;
-while (attempts < maxAttempts)
-{
-    try
-    {
-        if (masterContext.Database.CanConnect())
-            break;
-    }
-    catch
-    {
-        attempts++;
-        Thread.Sleep(1000);
-    }
-}
-if (attempts == maxAttempts)
-{
-    throw new Exception("Could not connect to SQL Server after 30 attempts");
-}
-
+// Criar escopo para obter contexto do banco MyWalletDb
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<MyWalletDbContext>();
+
+// Aplica as migrações para criar/atualizar esquema, assume que o banco já existe
 db.Database.Migrate();
 
 app.UseSwagger();

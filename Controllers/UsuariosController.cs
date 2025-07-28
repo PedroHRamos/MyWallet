@@ -29,7 +29,7 @@ namespace MyWallet.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll(Guid id)
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
             var usuarios = await _service.GetAllAsync();
             if (!usuarios.Any())
