@@ -4,14 +4,17 @@ API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usu
 
 ## Como rodar localmente
 
-- **Com Docker Compose:**  
+- Clone o projeto
+- Entre na pasta "MyWallet"
+- Abra o cmd no diretório atual
+
+- **Para rodar com Docker Compose:**  
    Certifique-se de ter Docker instalado e execute:  
    - `docker compose up -d --build`
    - Acesse `http://localhost:8080/swagger/index.html`
    
 
-- **Debug local com SQL Server Docker:**  
-    Execute o contêiner do SQL Server:  
+- **Para debugar com sql server no container:**  
     - `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Your_password123" -p 1433:1433 --name sql_server_container -d mcr.microsoft.com/mssql/server:latest`
     - Depois, execute o projeto no Visual Studio usando a opção `http`.
 
