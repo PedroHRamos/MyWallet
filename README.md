@@ -7,13 +7,13 @@ API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usu
 - **Com Docker Compose:**  
    Certifique-se de ter Docker instalado e execute:  
    - `docker compose up -d --build`
+   - Acesse `http://localhost:8080/swagger/index.html`
    
 
 - **Debug local com SQL Server Docker:**  
     Execute o contêiner do SQL Server:  
     - `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Your_password123" -p 1433:1433 --name sql_server_container -d mcr.microsoft.com/mssql/server:latest`
-
-Depois, execute o projeto no Visual Studio usando a opção `http`.
+    - Depois, execute o projeto no Visual Studio usando a opção `http`.
 
 ## Tecnologias
 
