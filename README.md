@@ -23,7 +23,6 @@ API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usu
 - .NET 8  
 - SQL Server  
 - Docker  
-- Kafka (No Futuro)  
 
 ## Observações
 
