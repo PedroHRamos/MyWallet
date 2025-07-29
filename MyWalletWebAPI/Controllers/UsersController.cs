@@ -2,8 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MyWallet.Features.Users;
+using MyWallet.Services.Users;
 using MyWallet.Models;
+using MyWalletWebAPI.Requests;
 
 namespace MyWallet.Controllers
 {
@@ -23,35 +24,52 @@ namespace MyWallet.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
         {
-            var User = await _service.CreateAsync(request);
-            _logger.LogInformation("POST /api/Users - User created: {Id}", User.Id);
-            return CreatedAtAction(nameof(Get), new { id = User.Id }, User);
+
+            try
+            {
+                var user = await _service.CreateAsync(request);
+                _logger.LogInformation("POST /api/Users - User created: {Id}", user.Id);
+                return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogWarning("POST /api/Users - User creation failed: {Message}", ex.Message);
+                return BadRequest("Please check user data and try again.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("POST /api/Users - User creation failed: {Message}", ex.Message);
+                return StatusCode(500, "Internal server error");
+                throw;
+            }
+
+            
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
-            var Users = await _service.GetAllAsync();
-            if (!Users.Any())
+            var users = await _service.GetAllAsync();
+            if (!users.Any())
             {
                 _logger.LogWarning("GET /api/Users - Users not found");
                 return NotFound();
             }
             _logger.LogInformation("GET /api/Users - Finished");
-            return Ok(Users);
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(Guid id)
         {
-            var User = await _service.GetAsync(id);
-            if (User == null)
+            var user = await _service.GetAsync(id);
+            if (user == null)
             {
                 _logger.LogWarning("GET /api/Users/{id} - User not found", id);
                 return NotFound();
             }
             _logger.LogInformation("GET /api/Users/{id} - Finished", id);
-            return User;
+            return user;
         }
 
         [HttpPut("{id}")]
