@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using MyWallet.Services.Users;
-using MyWallet.Models;
+using MyWalletWebAPI.Models.Database;
 using MyWalletWebAPI.Repositories.Users;
 using MyWalletWebAPI.Services.Users;
 

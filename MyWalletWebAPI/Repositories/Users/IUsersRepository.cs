@@ -1,4 +1,4 @@
-﻿using MyWallet.Models;
+﻿using MyWalletWebAPI.Domain;
 
 namespace MyWalletWebAPI.Repositories.Users;
 

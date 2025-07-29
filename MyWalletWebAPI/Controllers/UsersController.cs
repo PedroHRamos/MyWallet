@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyWallet.Services.Users;
-using MyWallet.Models;
 using MyWalletWebAPI.Requests;
+using MyWalletWebAPI.Domain;
 
 namespace MyWallet.Controllers
 {

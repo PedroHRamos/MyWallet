@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyWallet.Models;
-using MyWallet.Services.Users;
+using MyWalletWebAPI.Domain;
+using MyWalletWebAPI.Models.Database;
 
 namespace MyWalletWebAPI.Repositories.Users;
 

@@ -1,32 +1,31 @@
 # MyWallet
 
-API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usuários, com funcionalidades como cadastro, controle de ativos, cálculo de rentabilidade, carteira meta e relatórios.
+.NET 8 API for managing investment portfolios for multiple users, with users registration, assets control, profitability calculation, target portfolio, and reports.
 
-## Como rodar localmente
+## How to run locally
 
-- Clone o projeto
-- Entre no diretório `MyWallet/MyWalletWebAPI`
-- Abra o cmd no diretório atual
+- Clone the project
+- Enter the `MyWallet/MyWalletWebAPI` directory
+- Open the terminal in the current directory
 
-- **Para rodar com Docker Compose:**  
-   Certifique-se de ter Docker instalado e execute:  
-   - `docker compose up -d --build`
-   - Acesse `http://localhost:8080/swagger/index.html`
-   
-
-- **Para debugar com sql server no container:**  
+- **To run with Docker Compose:**
+Make sure Docker is installed and run:
+    - `docker compose up -d --build`
+    - Access `http://localhost:8080/swagger/index.html`
+- **To debug with SQL Server in a container:**
     - `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Your_password123" -p 1433:1433 --name sql_server_container -d mcr.microsoft.com/mssql/server:latest`
-    - Depois, execute o projeto no Visual Studio usando a opção `http`.
+    - Then, run the project in Visual Studio using the `http` option.
 
-## Tecnologias
 
-- .NET 8  
-- SQL Server  
-- Docker  
+## Technologies
 
-## Observações
+- .NET 8
+- SQL Server
+- Docker
 
-- Documentação automática via Swagger.  
-- Configure a string de conexão do SQL Server em `appsettings.json`.
 
+## Notes
+
+- Automatic documentation via Swagger.
+- Configure the SQL Server connection string in `appsettings.json`.
 

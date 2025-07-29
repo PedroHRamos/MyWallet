@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyWalletWebAPI.Models.Database;
 
@@ -11,9 +12,11 @@ using MyWalletWebAPI.Models.Database;
 namespace MyWallet.Migrations
 {
     [DbContext(typeof(MyWalletDbContext))]
-    partial class MyWalletDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729231011_CreatAssetCategoryAndAssetTables")]
+    partial class CreatAssetCategoryAndAssetTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,7 @@ namespace MyWallet.Migrations
 
                     b.HasIndex("AssetCategoryId");
 
-                    b.ToTable("Assets");
+                    b.ToTable("Asset");
                 });
 
             modelBuilder.Entity("MyWalletWebAPI.Domain.AssetCategory", b =>

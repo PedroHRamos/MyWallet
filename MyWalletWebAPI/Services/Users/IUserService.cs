@@ -1,5 +1,5 @@
-﻿using MyWallet.Models;
-using MyWallet.Services.Users;
+﻿using MyWallet.Services.Users;
+using MyWalletWebAPI.Domain;
 using MyWalletWebAPI.Requests;
 
 namespace MyWalletWebAPI.Services.Users;
