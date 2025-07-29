@@ -5,7 +5,7 @@ API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usu
 ## Como rodar localmente
 
 - Clone o projeto
-- Entre na pasta "MyWallet"
+- Entre no diretório `MyWallet/MyWalletWebAPI`
 - Abra o cmd no diretório atual
 
 - **Para rodar com Docker Compose:**  
@@ -23,7 +23,6 @@ API em .NET 8 para gerenciamento de carteiras de investimentos de múltiplos usu
 - .NET 8  
 - SQL Server  
 - Docker  
-- Kafka (No Futuro)  
 
 ## Observações
 

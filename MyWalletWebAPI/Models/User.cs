@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MyWallet.Models
 {
-    public class Usuario
+    public class User
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -16,6 +16,6 @@ namespace MyWallet.Models
     public class MyWalletDbContext : DbContext
     {
         public MyWalletDbContext(DbContextOptions<MyWalletDbContext> options) : base(options) { }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

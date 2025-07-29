@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   api:
     container_name: mywallet-api
@@ -9,8 +11,8 @@ services:
     depends_on:
       - sqlserver
     networks:
-      - mywallet-network 
-  
+      - mywallet-network
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -20,9 +22,7 @@ services:
     ports:
       - "1433:1433"
     networks:
-      mywallet-network:
-         aliases:
-          - sqlserver
+      - mywallet-network
 
   nginx:
     image: nginx:alpine
