@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyWalletWebAPI.Domain;
 using MyWalletWebAPI.Models.Database;
-using MyWalletWebAPI.Repositories.Users;
+using MyWalletWebAPI.Repositories;
 using MyWalletWebAPI.Requests;
 using MyWalletWebAPI.Services.Users;
 using System;

@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using MyWallet.Services.Users;
 using MyWalletWebAPI.Models.Database;
-using MyWalletWebAPI.Repositories.Users;
+using MyWalletWebAPI.Repositories;
+using MyWalletWebAPI.Services.AssetCategoryService;
 using MyWalletWebAPI.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,8 @@ builder.Services.AddScoped<UserService>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAssetCategoryRepository, AssetCategoryRepository>();
+builder.Services.AddScoped<IAssetCategoryService, AssetCategoryService>();
 
 var app = builder.Build();
 

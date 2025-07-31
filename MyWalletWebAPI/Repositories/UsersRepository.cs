@@ -2,7 +2,7 @@
 using MyWalletWebAPI.Domain;
 using MyWalletWebAPI.Models.Database;
 
-namespace MyWalletWebAPI.Repositories.Users;
+namespace MyWalletWebAPI.Repositories;
 
 public class UsersRepository : IUsersRepository
 {
@@ -74,8 +74,10 @@ public class UsersRepository : IUsersRepository
             _logger.LogWarning("User not found for deletion: {Id}", id);
             return false;
         }
+
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
+
         _logger.LogInformation("User deleted with Id {Id}", id);
         return true;
     }

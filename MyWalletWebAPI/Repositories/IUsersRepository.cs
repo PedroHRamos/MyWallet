@@ -1,6 +1,6 @@
 ﻿using MyWalletWebAPI.Domain;
 
-namespace MyWalletWebAPI.Repositories.Users;
+namespace MyWalletWebAPI.Repositories;
 
 public interface IUsersRepository
 {

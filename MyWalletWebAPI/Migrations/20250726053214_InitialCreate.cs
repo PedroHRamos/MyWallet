@@ -19,8 +19,8 @@ namespace MyWallet.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InvestorProfile = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Plan = table.Column<int>(type: "int", nullable: false)
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Plan = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
